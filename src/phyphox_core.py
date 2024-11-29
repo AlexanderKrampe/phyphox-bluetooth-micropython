@@ -33,9 +33,10 @@ aioble.register_services(phyphox_service, phyphox_data_service)
 
 
 def CRC32_from_file(filename):
-    buf = open(filename,'rb').read()
-    buf = (binascii.crc32(buf) & 0xFFFFFFFF)
-    return int("%08X" % buf, 16)
+    with open(filename, "rb") as file:
+        buf = (binascii.crc32(file.read()) & 0xFFFFFFFF)
+        return int("%08X" % buf, 16)
+
 
 async def transfer_experiment():
     with open(PHYPHOX_EXPERIMENT, "r") as experiment_file:
